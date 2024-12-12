@@ -1,0 +1,39 @@
+body {
+    color: #ffffff;
+}
+
+.container {
+    background-color: #fc838f;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    background-color: #ff00c8;
+}
+
+.btn-primary {
+    background-color: #219c21;
+    border-color: #0c2b00;
+}
+
+.btn-primary:hover {
+    background-color: #00ff22;
+    border-color: #0c2b00;
+}
+
+.btn-secondary {
+    background-color: #8c00ffb6;
+    border-color: #5a0047;
+}
+
+.btn-secondary:hover {
+    background-color: #ff00aa;
+    border-color: #5a0047;
+}
+
+input[type="text"],
+label {
+    color: #000000;
+}

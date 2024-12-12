@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excluir Cliente</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="text-white text-center p-5" style="background-color: #ff00c8;">
+        <h1>Exclusão de Dispositivo</h1>
+    </div>
+    <div class="container mt-5">
+    <form action="{% url 'delDevice' %}" method="post" id="form">
+        {% csrf_token %}
+        <table>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark text-center" style="background-color: #f5979e;">
+                        <tr>
+                            <td>#</td>
+                            <td>Nome</td>
+                            <td>Endereço</td>
+                            <td>Chave</td>
+                            <td>Ações</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for registro in registros %}
+                        <tr>
+                            <td>{{ registro.id }}</td>
+                            <td>{{ registro.nome }}</td>
+                            <td>{{ registro.endereco }}</td>
+                            <td>{{ registro.chave }}</td>
+                            <td><input type="button" value="X" onclick="Excluir('{{registro.id}}')"></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <input type="hidden" name="id" id="id">
+            </div>
+        </table>
+    </form>
+    </div>
+</body>
+<script>
+    function Excluir(id){
+        document.getElementById('id').value = id;
+        document.getElementById('form').submit();
+    }
+</script>
+
+</html>

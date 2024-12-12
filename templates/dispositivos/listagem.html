@@ -1,0 +1,92 @@
+{% extends 'base/base.html' %}
+{% block content %}    
+    <div class="container text-white text-center p-3 mt-5" style="background-color: #f5979e;">
+        <h1>Listagem de Dispositivos</h1>
+    </div>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-dark" href="/dispositivos/add" style="background-color: #ff00aa;">Cadastrar</a>
+        </div>
+        <div class="table-responsive mt-3">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark text-center" style="background-color: #f5979e;">
+                    <tr>
+                        <td>#</td>
+                        <td>Nome</td>
+                        <td>Endereço</td>
+                        <td>Chave</td>
+                        <td>Mudanças</td>
+                        <td>Ações</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if registros %}
+                    {% for registro in registros %}
+                    <tr>
+                        <td>{{ registro.id }}</td>
+                        <td>{{ registro.nome }}</td>
+                        <td>{{ registro.endereco }}</td>
+                        <td>{{ registro.chave }}</td>
+                        <td>
+                            <div class="d-flex justify-content-around align-middle">
+                                <button title="Excluir" class="btn text-light" onclick="excluir('{{ registro.id }}')"><i class="fa fa-trash-o"
+                                        aria-hidden="true"></i></button>
+                                <button title="Alterar" class="btn text-light" onclick="alterar('{{ registro.id }}')"><i
+                                        class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex justify-content-around">
+                                <button class="btn text-light" style="width: auto;" onclick="exibirAcoes('{{ registro.id }}')"><i class="fa fa-eye"
+                                        aria-hidden="true"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center">Não há nenhum dispositivo cadastrado.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<script>
+    function excluir(id) {
+        if (confirm("Tem certeza que deseja excluir este dispositivo?")) {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            fetch(`/dispositivos/del`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({ id: id })
+                })
+                .then(response => {
+                    if (response.status == '200') {
+                        window.location.reload()
+                    }
+                    else {
+                        window.alert('Erro ao excluir.')
+                        return
+                    }
+                })
+                .catch(error => {
+                    alert(error)
+                });
+        }
+    }
+
+    function alterar(id) {
+        window.location.href = `/dispositivos/upd/${id}`;
+    }
+
+    function exibirAcoes(id) {
+        window.location.href = `/acoes/list/${id}`;
+    }
+</script>
+{% endblock %}
